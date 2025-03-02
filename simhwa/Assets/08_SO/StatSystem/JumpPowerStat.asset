@@ -10,13 +10,14 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: d676725a036664246996da64ddc86eed, type: 3}
-  m_Name: HpStat
+  m_Name: JumpPowerStat
   m_EditorClassIdentifier: 
-  statName: Hp
-  description: "\uCE90\uB9AD\uD130\uC758 \uCCB4\uB825"
-  icon: {fileID: 3608455020995979555, guid: 23c7cc722cff86f438189a1eab35f7fe, type: 3}
-  displayName: HP
-  baseValue: 50
-  minValue: 0
-  maxValue: 9999
+  statName: JumpPower
+  description: "\uCE90\uB9AD\uD130\uC758 \uC810\uD504\uB825\uC744 \uB098\uD0C0\uB0B8\uB2E4.
+    \uD3C9\uADE0\uAC12 : 10"
+  icon: {fileID: -2709222682985300463, guid: 23c7cc722cff86f438189a1eab35f7fe, type: 3}
+  displayName: JMP
+  baseValue: 10
+  minValue: 1
+  maxValue: 30
   <IsPercent>k__BackingField: 0

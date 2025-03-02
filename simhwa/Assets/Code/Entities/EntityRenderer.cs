@@ -7,6 +7,7 @@ namespace Assets.Code.Entities
     public class EntityRenderer : MonoBehaviour, IEntityComponent
     {
         [SerializeField] private float facingRight = 1f;
+        [SerializeField] private AnimParamSO yVelocityParam;
 
         private Entity _entity;
         private Animator _animator;
@@ -23,9 +24,14 @@ namespace Assets.Code.Entities
         public void SetParam(AnimParamSO param, int value) => _animator.SetInteger(param.hashValue, value);
         public void SetParam(AnimParamSO param) => _animator.SetTrigger(param.hashValue);
 
-        #region Flip Controller
+        public void HandleVelocityChange(Vector2 movement)
+        {
+            FilpController(movement.x);
+            if(yVelocityParam != null)
+                SetParam(yVelocityParam, movement.y);
+        }
 
-        public void HandleVelocityChange(Vector2 movement) => FilpController(movement.x);
+        #region Flip Controller
 
         public void Filp()
         {

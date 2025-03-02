@@ -12,11 +12,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d676725a036664246996da64ddc86eed, type: 3}
   m_Name: MoveSpeedStat
   m_EditorClassIdentifier: 
-  statName: Hp
-  description: "\uCE90\uB9AD\uD130\uC758 \uCCB4\uB825"
-  icon: {fileID: 3608455020995979555, guid: 23c7cc722cff86f438189a1eab35f7fe, type: 3}
-  displayName: HP
-  baseValue: 50
-  minValue: 0
-  maxValue: 9999
+  statName: MoveSpeed
+  description: "\uCE90\uB9AD\uD130\uC758 \uC774\uB3D9\uC18D\uB3C4"
+  icon: {fileID: 6677851925306096348, guid: 23c7cc722cff86f438189a1eab35f7fe, type: 3}
+  displayName: SPD
+  baseValue: 6
+  minValue: 1
+  maxValue: 20
   <IsPercent>k__BackingField: 0

@@ -29,7 +29,10 @@ namespace Code.Players
             _stateMachine.UpdateStateMachine();
         }
 
-        internal void ChangeState(string newStateName) => _stateMachine.ChangeState(newStateName);
+        public void ChangeState(string newStateName)
+        {
+            _stateMachine.ChangeState(newStateName);
+        }
     }
 }
 

@@ -13,7 +13,7 @@ namespace Code.Players.States
         }
         public override void Update()
         {
-            base.Enter();
+            base.Update();
             float xInput = _player.PlayerInput.InputDirection.x;
 
             _mover.SetMovementX(xInput);

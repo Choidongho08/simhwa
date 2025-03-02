@@ -22,6 +22,15 @@ namespace Assets.Code.Players.States
             _player.PlayerInput.OnJumpKeyPressed += HandleJumpKeyPressed;
         }
 
+        public override void Update()
+        {
+            base.Update();
+            if (_mover.IsGroundDetected() == false)
+            {
+                _player.ChangeState("FALL");
+            }
+        }
+
         public override void Exit()
         {
             _player.PlayerInput.OnJumpKeyPressed -= HandleJumpKeyPressed;
@@ -30,7 +39,8 @@ namespace Assets.Code.Players.States
 
         private void HandleJumpKeyPressed()
         {
-            _player.ChangeState("JUMP");
+            if(_mover.IsGroundDetected())
+                _player.ChangeState("JUMP");
         }
     }
 }
