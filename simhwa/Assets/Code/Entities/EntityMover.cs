@@ -1,6 +1,7 @@
 using Assets.Code.Core.StatSystem;
 using Assets.Code.Entities;
 using System;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.Rendering.VirtualTexturing;
@@ -17,7 +18,7 @@ namespace Code.Entities
         [SerializeField] private Transform groundCheckTrm;
         [SerializeField] private Transform wallCheckTrm;
         [SerializeField] private float groundCheckDistance, groundBoxWidth, wallCheckDistance;
-        [SerializeField] private  LayerMask whatIsGround;
+        [SerializeField] private LayerMask whatIsGround;
         
         #region Member Field
 
@@ -25,13 +26,17 @@ namespace Code.Entities
         private float _moveSpeed = 6f;
         private float _moveSpeedMultiplier;
         private float _jumpPower;
+        private float _orignalGravityScale;
+        private float _limitYSpeed = 40f;
         
         private Rigidbody2D _rbCompo;
         private EntityStat _statCompo;
+        private Vector2 _colliderOffset, _colliderSize;
 
         #endregion
         
         public bool CanManualMove { get; set; } = true; // 넉백, 기절 시 이동 불가
+        public CapsuleCollider2D BodyCollider { get; private set; }
 
         #region Init Section
 
@@ -40,6 +45,10 @@ namespace Code.Entities
             _rbCompo = entity.GetComponent<Rigidbody2D>();
             _statCompo = entity.GetComponentInChildren<EntityStat>();
             _moveSpeedMultiplier = 1f;
+            _orignalGravityScale = _rbCompo.gravityScale;
+            BodyCollider = entity.GetComponent<CapsuleCollider2D>();
+            _colliderOffset = BodyCollider.offset;
+            _colliderSize = BodyCollider.size;
         }
 
         public void AfterInit()
@@ -66,6 +75,20 @@ namespace Code.Entities
         
         public void SetMoveSpeedMultiplier(float value) 
             => _moveSpeedMultiplier = value;
+        public void SetGarvityScale(float value)
+            => _rbCompo.gravityScale = _orignalGravityScale * value;
+
+        public void SetColliderSize(Vector2 size, Vector2 offset)
+        {
+            BodyCollider.size = size;
+            BodyCollider.offset = offset;
+        }
+
+        public void ResetColliderSize()
+        {
+            BodyCollider.size = _colliderSize;
+            BodyCollider.offset = _colliderOffset;
+        }
         
         private void HandleMoveSpeedChange(StatSO stat, float current, float previous)
             => _moveSpeed = current;
@@ -108,6 +131,19 @@ namespace Code.Entities
         public bool IsWallDetected(float facingDirection)
             => Physics2D.Raycast(wallCheckTrm.position, Vector2.right * facingDirection, wallCheckDistance, whatIsGround);
 
+        public bool CheckColliderInFront(Vector2 dashDirection, float maxDistance, out float distance)
+        {
+            Bounds colliderBound = BodyCollider.bounds;
+            Vector2 center = colliderBound.center;
+            Vector2 size = colliderBound.size;
+            size.y -= 0.2f;
+            
+            RaycastHit2D hit = Physics2D.BoxCast(center, size, 0, dashDirection, maxDistance, whatIsGround);
+            
+            distance = hit ? hit.distance : maxDistance;
+            return hit;
+        }
+        
         #endregion
 
 #if UNITY_EDITOR
@@ -124,7 +160,8 @@ namespace Code.Entities
                 Gizmos.DrawLine(wallCheckTrm.position, wallCheckTrm.position + new Vector3(wallCheckDistance, 0));
         }
 #endif
-       
+
+        
     }
 }
 

@@ -20,12 +20,13 @@ namespace Assets.Code.Players.States
         {
             base.Enter();
             _player.PlayerInput.OnJumpKeyPressed += HandleJumpKeyPressed;
+            _player.PlayerInput.OnAttackKeyPressed += HandleAttackKeyPressed;
         }
 
         public override void Update()
         {
             base.Update();
-            if (_mover.IsGroundDetected() == false)
+            if (_mover.IsGroundDetected() == false && _mover.CanManualMove)
             {
                 _player.ChangeState("FALL");
             }
@@ -34,7 +35,14 @@ namespace Assets.Code.Players.States
         public override void Exit()
         {
             _player.PlayerInput.OnJumpKeyPressed -= HandleJumpKeyPressed;
+            _player.PlayerInput.OnAttackKeyPressed -= HandleAttackKeyPressed;
             base.Exit();
+        }
+
+        protected virtual void HandleAttackKeyPressed()
+        {
+            if(_mover.IsGroundDetected())
+                _player.ChangeState("ATTACK");
         }
 
         private void HandleJumpKeyPressed()

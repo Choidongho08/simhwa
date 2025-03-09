@@ -8,9 +8,18 @@ namespace Code.Players.States
 {
     public class PlayerMoveState : PlayerGroundState
     {
+        private float _stateTime;
         public PlayerMoveState(Entity entity, AnimParamSO animParam) : base(entity, animParam)
         {
         }
+
+        public override void Enter()
+        {
+            base.Enter();
+            _stateTime = Time.time;
+            _player.PlayerInput.OnSlideKeyPressed += HandleSlideKey;
+        }
+
         public override void Update()
         {
             base.Update();
@@ -22,6 +31,28 @@ namespace Code.Players.States
             {
                 _player.ChangeState("IDLE");
             }
+        }
+
+        public override void Exit()
+        {
+            _player.PlayerInput.OnSlideKeyPressed -= HandleSlideKey;
+            base.Exit();
+        }
+
+        private void HandleSlideKey()
+        {
+            float overSlideTime = 0.3f;
+            if(_stateTime + overSlideTime < Time.time)
+                _player.ChangeState("SLIDE");
+        }
+
+        protected override void HandleAttackKeyPressed()
+        {
+            float overDashTime = 0.3f;
+            if(_stateTime + overDashTime < Time.time)
+                _player.ChangeState("DASH_ATTACK");
+            else
+                base.HandleAttackKeyPressed();
         }
     }
 }

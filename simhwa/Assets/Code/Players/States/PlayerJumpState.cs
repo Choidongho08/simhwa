@@ -14,6 +14,8 @@ namespace Code.Players.States
         public override void Enter()
         {
             base.Enter();
+            _player.DecreaseJumpCount();
+            _mover.StopImmediately(true); // 공중에서 떨어지는 힘을 리셋하고 점프 가능
             _mover.Jump();
             _mover.OnMove.AddListener(HandleVelocityChange);
         }

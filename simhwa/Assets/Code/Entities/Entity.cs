@@ -34,13 +34,13 @@ namespace Assets.Code.Entities
         {
             if (_components.TryGetValue(typeof(T), out IEntityComponent component))
                 return (T)component;
-            if(isDerived == false) return default(T);
+            if(isDerived == false) return default;
 
             Type findType = _components.Keys.FirstOrDefault(type => type.IsSubclassOf(typeof(T)));
             if(findType != null) 
                 return (T)_components[findType];
 
-            return default(T);
+            return default;
         }
     }
 }

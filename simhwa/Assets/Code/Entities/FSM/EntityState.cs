@@ -14,7 +14,7 @@ namespace Assets.Code.Entities.FSM
         public EntityState(Entity entity, AnimParamSO animParam)
         {
             _entity = entity;
-            _animParam = animParam;
+            _animParam = animParam; 
             _renderer = _entity.GetCompo<EntityRenderer>(true);
 
         }
