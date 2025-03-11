@@ -37,7 +37,7 @@ namespace Assets.Code.Entities
             if(isDerived == false) return default;
 
             Type findType = _components.Keys.FirstOrDefault(type => type.IsSubclassOf(typeof(T)));
-            if(findType != null) 
+            if(findType != null)
                 return (T)_components[findType];
 
             return default;

@@ -27,7 +27,6 @@ namespace Code.Entities
         private float _moveSpeedMultiplier;
         private float _jumpPower;
         private float _orignalGravityScale;
-        private float _limitYSpeed = 40f;
         
         private Rigidbody2D _rbCompo;
         private EntityStat _statCompo;

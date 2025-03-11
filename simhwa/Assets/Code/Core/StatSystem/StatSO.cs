@@ -21,7 +21,7 @@ namespace Assets.Code.Core.StatSystem
         [SerializeField] private string displayName;
         [SerializeField] private float baseValue, minValue, maxValue;
 
-        private Dictionary<object, float> _modifyDictionary = new Dictionary<object, float> ();
+        private Dictionary<object, float> _modifyDictionary = new Dictionary<object, float>();
 
         [field : SerializeField] public bool IsPercent { get; private set; }
 
@@ -50,7 +50,7 @@ namespace Assets.Code.Core.StatSystem
             set
             {
                 float previousValue = value;
-                baseValue = Mathf.Clamp(value, minValue, maxValue);
+                baseValue = Mathf.Clamp(previousValue, minValue, maxValue);
                 TryInvokeValueChangeEvent(Value, previousValue); 
             }
         }
